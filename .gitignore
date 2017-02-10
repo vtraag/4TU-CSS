@@ -1,0 +1,16 @@
+*.pdf
+*.aux
+*.bbl
+*.toc
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.pdf
+*.run.xml
+*.snm
+*.synctex
+*.toc
+*-blx.bib
