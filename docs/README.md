@@ -3,7 +3,8 @@
 
 Preliminary programme
 ---------------------
-
+|               |                                           |
+|---------------|-------------------------------------------|
 | 10:00 - 10:30 | Computational Social Science introduction |
 | 10:30 - 12:30 | Natural Language Processing lab           |
 | 12:30 - 13:30 | Lunch                                     |
