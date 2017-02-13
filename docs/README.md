@@ -3,14 +3,13 @@
 
 Preliminary programme
 ---------------------
-|               |                                           |
-|---------------|-------------------------------------------|
-| 10:00 - 10:30 | Computational Social Science introduction |
-| 10:30 - 12:30 | Natural Language Processing lab           |
-| 12:30 - 13:30 | Lunch                                     |
-| 13:30 - 15:30 | Network lab                               |
-| 15:30 - 17:00 | Group assignment                          |
-| 17:00 - 17:30 | Wrap up & drinks                          |
+
+- 10:00 - 10:30 Computational Social Science introduction 
+- 10:30 - 12:30 Natural Language Processing lab           
+- 12:30 - 13:30 Lunch                                     
+- 13:30 - 15:30 Network lab                               
+- 15:30 - 17:00 Group assignment                          
+- 17:00 - 17:30 Wrap up & drinks                          
 
 [Optionally: diner]
 
