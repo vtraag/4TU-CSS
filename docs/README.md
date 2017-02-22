@@ -14,7 +14,7 @@ Preliminary programme
 - 15:30 - 17:00 Group assignment                          
 - 17:00 - 17:30 Wrap up & drinks                          
 
-[Optionally: diner]
+[Optionally: dinner]
 
 Software
 --------
