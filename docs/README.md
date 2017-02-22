@@ -1,5 +1,8 @@
-4TU Computational Social Science Workshop
+4TU Computational Social Science Seminar
 =========================================
+
+With increasing amounts of data the social sciences have the opportunity to become more computationally oriented, bringing together elements of machine learning and data science with substantive social theories. We will provide a brief introduction to the core of the computational social science. The main focus in this workshop is on two key elements of this new field: natural language processing (NLP) and social networks. We will take a hands-on approach, with interactive lectures combining theoretical explanations with actual coding. In the group assignments, we will stimulate an integrated approach to both NLP and network analysis.
+
 
 Preliminary programme
 ---------------------
@@ -27,9 +30,13 @@ Some of the other packages we will rely on during the workshop are:
 All can be installed in Anaconda (or using `pip` if you prefer).
 
 
+Location
+--------
+The seminar will be held at the INFORM space in the [Designlab](https://www.utwente.nl/en/designlab/) of the University of Twente. 
 
-
-
-
+Organizers
+--------
+- [Vincent Traag](http://www.traag.net/) (Leiden University)
+- [Dong Nguyen](http://www.dongnguyen.nl) (Alan Turing Institute)
 
 
