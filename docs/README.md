@@ -36,7 +36,12 @@ The seminar will be held at the INFORM space in the [Designlab](https://www.utwe
 
 Organizers
 --------
+<img style="float: right;" src="../img/4tu-federatie.png" alt="4TU">
+
 - [Vincent Traag](http://www.traag.net/) (Leiden University)
 - [Dong Nguyen](http://www.dongnguyen.nl) (Alan Turing Institute)
+
+
+
 
 
