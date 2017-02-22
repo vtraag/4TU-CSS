@@ -7,12 +7,14 @@ With increasing amounts of data the social sciences have the opportunity to beco
 Preliminary programme
 ---------------------
 
-- 10:00 - 10:30 Computational Social Science introduction 
-- 10:30 - 12:30 Natural Language Processing lab           
-- 12:30 - 13:30 Lunch                                     
-- 13:30 - 15:30 Network lab                               
-- 15:30 - 17:00 Group assignment                          
-- 17:00 - 17:30 Wrap up & drinks                          
+| Time  | Topic |
+| ------------- | ------------- |
+| 10:00 - 10:30 | Computational Social Science introduction   |
+| 10:30 - 12:30 | Natural Language Processing (NLP) lab  <br> The first part will focus on applying NLP tools and we will discuss topics such as sentiment analysis, <br>named entity recognition, part-of-speech tagging and feature representation.<br> The second part will focus on NLP to analyze and model social dynamics. <br>We will discuss computational approaches to analyze language & social identity <br>(gender, age, location) and language in interaction (e.g., social relationships,<br> dynamics in online communities). |
+| 12:30 - 13:30 | Lunch  |                                   
+| 13:30 - 15:30 | Network lab |                               
+| 15:30 - 17:00 | Group assignment |                          
+| 17:00 - 17:30 | Wrap up & drinks  |                        
 
 [Optionally: dinner]
 
