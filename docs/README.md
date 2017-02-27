@@ -18,6 +18,11 @@ Preliminary programme
 
 [Optionally: dinner]
 
+Prerequisite knowledge
+----------------------
+
+We intend the workhop to be suitable for graduate students from all disciplines. Because of this, we will not assume any particular skillset. Nonetheless, there will be some coding in [python](https://www.python.org/), because we aim to make the workshop practically relevant. It is therefore advisable to acquaint yourself with python if you have no experience yet. See also below for what software to install prior to the workshop.
+
 Software
 --------
 
@@ -32,6 +37,8 @@ Some of the other packages we will rely on during the workshop are:
 - [louvain](https://pypi.python.org/pypi/louvain/)
 
 All can be installed in Anaconda (or using `pip` if you prefer).
+
+It is practical to use python in for example [ipython](http://ipython.org/) or [spyder](https://github.com/spyder-ide/spyder), both are included in the Anaconda distribution.
 
 Location
 --------
