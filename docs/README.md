@@ -21,7 +21,9 @@ Preliminary programme
 Software
 --------
 
-We will use [python](https://www.python.org/) during our workshop. We will depend on the [scipy stack](http://www.scipy.org/), and it is recommended to use the [Anaconda](https://www.continuum.io/downloads) especially if you are on Windows.
+The workshop will be interactive, and we plan to switch between theoretical explanations and practical coding during class. Please bring your own laptop, with all prerequisite software installed. If you encounter any issue installing any software, please do not hesitate to contact one of the instructors.
+
+We will use [python](https://www.python.org/) during our workshop. We will depend on the [scipy stack](http://www.scipy.org/), and it is recommended to use the [Anaconda](https://www.continuum.io/downloads) distribution especially if you are on Windows.
 
 Some of the other packages we will rely on during the workshop are:
 
@@ -30,7 +32,6 @@ Some of the other packages we will rely on during the workshop are:
 - [louvain](https://pypi.python.org/pypi/louvain/)
 
 All can be installed in Anaconda (or using `pip` if you prefer).
-
 
 Location
 --------
