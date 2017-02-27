@@ -45,6 +45,7 @@ It is practical to use python in for example [ipython](http://ipython.org/) or [
 Registration
 --------
 Participation is free, but registration is required to help us plan the event accordingly: [registration form](https://goo.gl/forms/XyiyCmaZgaO01Jez2)
+
 Location
 --------
 The seminar will be held at the INFORM space in the [Designlab](https://www.utwente.nl/en/designlab/) of the University of Twente. 
