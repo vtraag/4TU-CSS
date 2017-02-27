@@ -1,5 +1,7 @@
-4TU Computational Social Science Seminar
+4TU Computational Social Science Seminar 
 =========================================
+#### 7 April 2017 @ University of Twente
+
 
 With increasing amounts of data the social sciences have the opportunity to become more computationally oriented, bringing together elements of machine learning and data science with substantive social theories. We will provide a brief introduction to the core of the computational social science. The main focus in this workshop is on two key elements of this new field: natural language processing (NLP) and social networks. We will take a hands-on approach, with interactive lectures combining theoretical explanations with actual coding. In the group assignments, we will stimulate an integrated approach to both NLP and network analysis.
 
