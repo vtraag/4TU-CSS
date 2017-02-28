@@ -3,7 +3,7 @@
 #### 7 April 2017 @ University of Twente
 
 
-With increasing amounts of data the social sciences have the opportunity to become more computationally oriented, bringing together elements of machine learning and data science with substantive social theories. We will provide a brief introduction to the core of the computational social science. The main focus in this workshop is on two key elements of this new field: natural language processing (NLP) and social networks. We will take a hands-on approach, with interactive lectures combining theoretical explanations with actual coding. In the group assignments, we will stimulate an integrated approach to both NLP and network analysis.
+With increasing amounts of data the social sciences have the opportunity to become more computationally oriented, bringing together elements of machine learning and data science with substantive social theories. We will provide a brief introduction to the core of the computational social science. The main focus in this workshop is on two key elements of this new field: natural language processing (NLP) and social networks. We will take a hands-on approach, with interactive lectures that combine theoretical explanations with actual coding. In the group assignments, we will stimulate an integrated approach to both NLP and network analysis.
 
 
 Preliminary programme
@@ -53,6 +53,7 @@ The seminar will be held at the INFORM space in the [Designlab](https://www.utwe
 Organizers
 --------
 <img style="float: right;" src="img/4tu-federatie.png" alt="4TU">
+This is a <a href="https://www.4tu.nl/ht/en/">4TU Humans & Technology</a> event. The lecturers: 
 
 - [Vincent Traag](http://www.traag.net/) (Leiden University)
 - [Dong Nguyen](http://www.dongnguyen.nl) (Alan Turing Institute)
