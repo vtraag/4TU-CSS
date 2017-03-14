@@ -58,21 +58,23 @@ This is a <a href="https://www.4tu.nl/ht/en/">4TU Humans & Technology</a> event.
 - [Vincent Traag](http://www.traag.net/) (Leiden University)
 - [Dong Nguyen](http://www.dongnguyen.nl) (Alan Turing Institute)
 
+---
 
 Backgroud reading (optional)
 --------
 
-###Courses
+### Courses
 * [Computational social science](https://github.com/jacobeisenstein/gt-css-class/blob/master/schedule.md) (Gatech 2015) 
 * [Social Media Analysis and Computational Social Science](http://people.cs.umass.edu/~brenocon/smacss2015/) (UMass 2015) 
 * [Computational Social Science](http://www.princeton.edu/~mjs3/soc596_f2016/) (Princeton 2016)
 
-###Tutorials
+### Tutorials
 * [Limits of Social Data](http://www.aolteanu.com/SocialDataLimitsTutorial/index.html) (ICWSM 2016) 
 * [Online Experiments for Computational Social Science](https://eytan.github.io/www-15-tutorial/) (WWW 2015) 
 * [Computational Social Science for the World Wide Web](https://sites.google.com/site/csswwwtutorial/home)  (WWW 2016) 
 
-###Papers
+### Papers
+
 **General**
 
 * Lazer et al. (2009), Life in the network: the coming age of computational social science. Science, Vol. 323, Issue 5915, pp. 721-723.
@@ -86,7 +88,8 @@ Backgroud reading (optional)
 
 * Olteanu, A. & Castillo, C. & Diaz, F. & Kıcıman, E. (preprint) Social Data: Biases, Methodological Pitfalls, and Ethical Boundaries
 
-###Textbooks
+### Textbooks
+
 **General**
 
 * Bishop, C. M. (2006). Pattern Recognition and Machine Learning. Springer.
