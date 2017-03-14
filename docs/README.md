@@ -34,6 +34,7 @@ We will use [python](https://www.python.org/) during our workshop. We will depen
 
 Some of the other packages we will rely on during the workshop are:
 
+- [gensim](https://radimrehurek.com/gensim/)
 - [Python NLTK](http://www.nltk.org/)
 - [igraph](http://igraph.org/)
 - [louvain](https://pypi.python.org/pypi/louvain/)
