@@ -59,6 +59,54 @@ This is a <a href="https://www.4tu.nl/ht/en/">4TU Humans & Technology</a> event.
 - [Dong Nguyen](http://www.dongnguyen.nl) (Alan Turing Institute)
 
 
+Backgroud reading (optional)
+--------
 
+###Courses
+* [Computational social science](https://github.com/jacobeisenstein/gt-css-class/blob/master/schedule.md) (Gatech 2015) 
+* [Social Media Analysis and Computational Social Science](http://people.cs.umass.edu/~brenocon/smacss2015/) (UMass 2015) 
+* [Computational Social Science](http://www.princeton.edu/~mjs3/soc596_f2016/) (Princeton 2016)
+
+###Tutorials
+* [Limits of Social Data](http://www.aolteanu.com/SocialDataLimitsTutorial/index.html) (ICWSM 2016) 
+* [Online Experiments for Computational Social Science](https://eytan.github.io/www-15-tutorial/) (WWW 2015) 
+* [Computational Social Science for the World Wide Web](https://sites.google.com/site/csswwwtutorial/home)  (WWW 2016) 
+
+###Papers
+**General**
+
+* Lazer et al. (2009), Life in the network: the coming age of computational social science. Science, Vol. 323, Issue 5915, pp. 721-723.
+
+**Natural Language Processing**
+
+* Nguyen, D. & Doğruöz, A.S.  & Rosé, A.S. & de Jong, F.M.G. (2016) Computational Sociolinguistics: A Survey. Computational Linguistics. Vol. 42, No. 3, Pages 537-593
+* Bibliography on NLP and ethics: http://faculty.washington.edu/ebender/2017_575/
+
+**Social media**
+
+* Olteanu, A. & Castillo, C. & Diaz, F. & Kıcıman, E. (preprint) Social Data: Biases, Methodological Pitfalls, and Ethical Boundaries
+
+###Textbooks
+**General**
+
+* Bishop, C. M. (2006). Pattern Recognition and Machine Learning. Springer.
+Cover, T. M., & Thomas, J. A. (2012). Elements of Information Theory (Vol. 2012). John Wiley & Sons.
+* Hastie, T. &  Tibshirani, R. &  Friedman, J. (2009). The Elements of Statistical Learning: Data Mining, Inference, and Prediction. Springer. Freely available here: https://statweb.stanford.edu/~tibs/ElemStatLearn/
+* Murphy, K. P. (2012). Machine Learning: a Probabilistic Perspective. The MIT Press.
+* Shalizi, C. R. (2013). Advanced data analysis from an elementary point of view
+* Beazley, D., & Jones, B. K. (2013). Python Cookbook (2 edition). Sebastopol, CA: O’Reilly Media.
+
+**Networks**
+
+* Diestel, R. (2005). Graph Theory. Graduate Texts in Mathematics. Heidelberg: Springer. 
+* Newman, M. (2010). Networks: an introduction, Oxford University Press.
+* Easley, D. & Kleinberg, J. (2010) Networks, Crowds, and Markets, Cambridge University Press. Freely available here: https://www.cs.cornell.edu/home/kleinber/networks-book/
+* Wasserman, S. & Faust, K. (1994) Social Network Analysis, Cambridge University Press (bit old but classic)
+
+**Natural Language Processing**
+
+* Jurafsky, D. & Martin, James H. Speech and Language Processing, Pearson. Draft of the 3rd edition is freely available here: https://web.stanford.edu/~jurafsky/slp3/
+* Manning, Chris & Schütze, Hinrich (1999) Foundations of Statistical Natural Language Processing, MIT Press.
+* Bird, S. & Klein, E. & Loper, E., Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit. Freely available here: http://www.nltk.org/book/
 
 
