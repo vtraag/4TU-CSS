@@ -82,7 +82,7 @@ Backgroud reading (optional)
 **Natural Language Processing**
 
 * Nguyen, D. & Doğruöz, A.S.  & Rosé, A.S. & de Jong, F.M.G. (2016) Computational Sociolinguistics: A Survey. Computational Linguistics. Vol. 42, No. 3, Pages 537-593
-* Bibliography on NLP and ethics: http://faculty.washington.edu/ebender/2017_575/
+* Bibliography on NLP and ethics: <http://faculty.washington.edu/ebender/2017_575/>
 
 **Social media**
 
@@ -94,7 +94,7 @@ Backgroud reading (optional)
 
 * Bishop, C. M. (2006). Pattern Recognition and Machine Learning. Springer.
 Cover, T. M., & Thomas, J. A. (2012). Elements of Information Theory (Vol. 2012). John Wiley & Sons.
-* Hastie, T. &  Tibshirani, R. &  Friedman, J. (2009). The Elements of Statistical Learning: Data Mining, Inference, and Prediction. Springer. Freely available here: https://statweb.stanford.edu/~tibs/ElemStatLearn/
+* Hastie, T. &  Tibshirani, R. &  Friedman, J. (2009). The Elements of Statistical Learning: Data Mining, Inference, and Prediction. Springer. [Online available](https://statweb.stanford.edu/~tibs/ElemStatLearn/)
 * Murphy, K. P. (2012). Machine Learning: a Probabilistic Perspective. The MIT Press.
 * Shalizi, C. R. (2013). Advanced data analysis from an elementary point of view
 * Beazley, D., & Jones, B. K. (2013). Python Cookbook (2 edition). Sebastopol, CA: O’Reilly Media.
@@ -103,13 +103,13 @@ Cover, T. M., & Thomas, J. A. (2012). Elements of Information Theory (Vol. 2012)
 
 * Diestel, R. (2005). Graph Theory. Graduate Texts in Mathematics. Heidelberg: Springer. 
 * Newman, M. (2010). Networks: an introduction, Oxford University Press.
-* Easley, D. & Kleinberg, J. (2010) Networks, Crowds, and Markets, Cambridge University Press. Freely available here: https://www.cs.cornell.edu/home/kleinber/networks-book/
+* Easley, D. & Kleinberg, J. (2010) Networks, Crowds, and Markets, Cambridge University Press. [Online available](https://www.cs.cornell.edu/home/kleinber/networks-book/)
 * Wasserman, S. & Faust, K. (1994) Social Network Analysis, Cambridge University Press (bit old but classic)
 
 **Natural Language Processing**
 
-* Jurafsky, D. & Martin, James H. Speech and Language Processing, Pearson. Draft of the 3rd edition is freely available here: https://web.stanford.edu/~jurafsky/slp3/
+* Jurafsky, D. & Martin, James H. Speech and Language Processing, Pearson. Draft of the 3rd edition is [online available](https://web.stanford.edu/~jurafsky/slp3/)
 * Manning, Chris & Schütze, Hinrich (1999) Foundations of Statistical Natural Language Processing, MIT Press.
-* Bird, S. & Klein, E. & Loper, E., Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit. Freely available here: http://www.nltk.org/book/
+* Bird, S. & Klein, E. & Loper, E., Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit. [Online available](http://www.nltk.org/book/)
 
 
