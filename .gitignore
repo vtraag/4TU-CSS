@@ -14,3 +14,10 @@
 *.synctex
 *.toc
 *-blx.bib
+*.pyc
+*.swp
+*.fls
+*.fdb_latexmk
+data/reddit/
+presentations/traag/notebook/data/
+**/.ipynb_checkpoints/

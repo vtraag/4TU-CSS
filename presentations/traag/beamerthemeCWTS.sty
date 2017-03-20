@@ -1,0 +1,198 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackage{beamerthemeCWTS}  % this style was created by Vincent Traag
+
+\mode<presentation>
+
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{shadings}
+\usetikzlibrary{fadings}
+
+\usetheme{default}
+%\useoutertheme[subsection=false,compress]{miniframes}
+%\useoutertheme[subsection=false]{infolines}
+%\useinnertheme[shadow=false]{rounded}
+\useinnertheme{circles} 
+%\setbeamertemplate{blocks}[rounded]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\selectcolormodel{cmyk}
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{cwtsblue}{RGB}{0,73,144}
+\definecolor{cwtsblue-1}{RGB}{100,123,178}
+\definecolor{cwtsblue-2}{RGB}{142,157,200}
+\definecolor{cwtsblue-3}{RGB}{191,198,224}
+\definecolor{cwtsblue-fade}{RGB}{0,110,219}
+\definecolor{cwtsblue-fade2}{RGB}{0,90,183}
+\definecolor{cwtsdark}{RGB}{88,89,91}
+\definecolor{nicered}{rgb}{0.301961,0.686275,0.290196}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\def\logofig{logo}
+
+\setbeamerfont{bibliography entry author}{size={\footnotesize}}
+\setbeamerfont{bibliography entry title}{size={\footnotesize}}
+\setbeamerfont{bibliography entry journal}{size={\footnotesize}}
+
+\defbeamertemplate{bibliography item}{smallarticle} 
+{\lower1pt\hbox{\scalebox{0.5}{\pgfuseimage{beamericonarticle}}}} 
+
+\setbeamertemplate{bibliography item}[smallarticle]
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+
+\setbeamercolor{structure}{fg=cwtsdark,bg=cwtsblue-3}
+
+\setbeamercolor*{palette primary}    {use=structure, fg=structure.fg, bg=structure.bg}
+\setbeamercolor*{palette secondary}  {use=structure, fg=structure.fg, bg=structure.bg!30}
+
+\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor{title}{fg=white,bg=}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamercolor{date}{fg=white,bg=}
+\setbeamercolor{author}{fg=white,bg=}
+\setbeamercolor{institute}{fg=white,bg=}
+\setbeamercolor*{section in head/foot}{parent=palette primary}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\setbeamercolor{block title}{parent=palette secondary}
+\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
+\setbeamercolor{block title example}{use=example text,fg=white,bg=nicered!75}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=nicered!10}
+
+\setbeamercolor{item projected}{parent=palette secondary}
+
+\setbeamerfont{block title}{size={}}
+\setbeamertemplate{navigation symbols}{}
+
+\defbeamertemplate*{footline}{my footline}
+{
+    \ifnum \insertpagenumber=1
+      %\leavevmode%
+      %\hbox{%
+      %\begin{beamercolorbox}[wd=\paperwidth-2cm,ht=1cm,dp=0pt,center]{}%
+        %% empty environment to raise height
+      %\end{beamercolorbox}}%
+      %\vskip0pt%
+    \else
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=0.5\paperwidth,ht=1cm,dp=1cm,left]{title in head/foot}%
+        \includegraphics[height=1.5cm]{logo_cwts}\vskip-3mm
+      \end{beamercolorbox}
+      \begin{beamercolorbox}[wd=0.5\paperwidth, ht=1cm, dp=1cm, right]{title in head/foot}%
+        \usebeamerfont{title in head/foot}\insertframenumber/\inserttotalframenumber\hspace*{2ex}
+      \end{beamercolorbox}}%
+      \vskip-2cm%
+    \fi
+}
+
+\setbeamertemplate{footline}[my footline]
+
+\addtobeamertemplate{footnote}{\hsize2cm}{}
+
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamercovered{transparent=50}
+\setbeamertemplate{frametitle}
+{
+  \nointerlineskip
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=6pt, wd=\the\@tempdima]{frametitle}
+    \usebeamerfont{frametitle}%
+    \vbox{}\vskip-1.5ex%
+    \hskip2pt
+    \insertframetitle
+    \vskip-2pt%
+  \end{beamercolorbox}%
+}
+
+\tikzfading[name=fade bottom, top color=transparent!0, bottom color=transparent!100]
+\pgfdeclareimage[height=13cm]{logo}{../logos/logo_only_cwts_black}
+\usebackgroundtemplate%
+{%
+	\begin{tikzpicture}[remember picture,overlay]
+    (current page.north east) 
+    rectangle (current page.south west);
+    \node[anchor=west,
+      xshift=-9cm,
+      yshift=0cm,
+      opacity=0.02, 
+      scope fading=fade bottom
+    ] at (current page.east)
+    {\pgfuseimage{logo}};
+  \end{tikzpicture}
+}
+
+\setbeamertemplate{title page}
+{
+	\begin{tikzpicture}[remember picture,overlay]
+    \shade[upper left=cwtsblue,
+      upper right=cwtsblue-fade, 
+      lower left=cwtsblue,
+    lower right=cwtsblue-fade2]  
+    (current page.north east) 
+    rectangle (current page.south west);
+    \node[anchor=west,
+      xshift=-9cm,
+      yshift=0cm,
+      opacity=0.2,
+      scope fading=fade bottom
+    ] at (current page.east)
+    {\includegraphics[height=13cm]{logo_only_cwts_black}};
+  \end{tikzpicture}
+
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[anchor=north west,
+					xshift=5mm,
+					yshift=-3mm] at (current page.north west)
+			{\includegraphics[height=1.2cm]{logo_cwts_white}};
+		\node[anchor=south west,
+					xshift=5mm,
+					yshift=5mm] at (current page.south west)
+			{\includegraphics[height=1.2cm]{logo_LU_white}};
+	\end{tikzpicture}
+  \begin{centering}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}%\vskip0.5em
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+  \end{centering}
+  %\vfill
+}
+
+\mode<all>
+

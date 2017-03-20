@@ -1,4 +1,5 @@
 \documentclass[notes=hide,compress]{beamer}
+\usetheme{CWTS}
 
 \usepackage{siunitx}
 
@@ -17,6 +18,7 @@
   maxbibnames=100,
   style=nature,
   block=none]{biblatex}
+\bibliography{bibliography_formatted}
 % No title and no month
 \AtEveryCitekey{\clearfield{title}}
 \AtEveryCitekey{\clearfield{month}}
@@ -49,7 +51,8 @@
     \let\mkbibfootnote\mkbibfootnotetext}%
   \footfullcite}
 
-\usetheme{Dresden}
+%\usetheme{Dresden}
+%\usetheme{default}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{bbm}
@@ -62,6 +65,11 @@
 \usepackage[absolute,overlay]{textpos}
 \tikzstyle{every picture}+=[remember picture]
 \usepackage[normalem]{ulem}
+
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{designplots}
+\usepgfplotslibrary{dateplot}
 
 \usetikzlibrary{positioning}
 \usetikzlibrary{fit}					% fitting shapes to coordinates
@@ -79,11 +87,23 @@
 \usetikzlibrary{shadows}
 \usetikzlibrary{fadings}
 
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+%\everymath{\displaystyle}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\T}{{\!\top}}
+
+\pgfdeclarelayer{background} 
+\pgfsetlayers{background,main} 
+
+\setlength{\leftmargini}{1em}
 \graphicspath{{figures/}}
 % Set title and authors
-\title{Network analysis in Computational Social Science.}
+\title{Computation Social Science - Network}
 \author{V.A. Traag}
-\institute{CWTS, Leiden, the Netherlands}
+\institute{
+  4TU, Twente, the Netherlands \\[5mm]
+  4TU Seminar \\}
 \titlegraphic{
   \begin{center}
     \begin{tabular}{rl}
@@ -93,13 +113,56 @@
   \end{center}
 }
 \graphicspath{ {../logos/}{figures/} }
-\date{7 April, 2016}
+\date{7 April, 2017}
 \tikzstyle{every picture}+=[remember picture]
-
+\tikzstyle{na} = [baseline=-.5ex, inner sep=0pt, outer sep=0pt]
+%\includeonlyframes{%
+  %disconnected,%
+  %disconnected2,%
+  %disconnected3%
+  %fast%
+  %fast2%
+  %louvain%
+  %WoS%
+	%upper_resolution%
+  %geomod,%
+  %geocpm%
+%}
 \begin{document}
 \frame[label=title]{\titlepage}
 \begin{frame}[label=overview]
   \frametitle{Overview}
-
+  \begin{enumerate}
+    \item Network basics
+      \begin{enumerate}
+        \item Vertices \& edges
+        \item Paths \& components
+        \item Clustering \& bridges
+      \end{enumerate}
+    \item Social network tradition
+      \begin{enumerate}
+        \item Homophily
+        \item Social influence
+        \begin{enumerate}
+          \item Centrality
+        \end{enumerate}
+				\item Weak ties
+        \item Structural holes
+        \item Equivalence
+        \item Social balance
+      \end{enumerate}
+    \item Complex network tradition
+      \begin{enumerate}
+        \item Random graphs
+        \begin{enumerate}
+          \item Erdos-Renyi
+          \item Scale free
+        \end{enumerate}
+        \item Spreading \& percolation
+        \item Community detection
+      \end{enumerate}
+  \end{enumerate}
 \end{frame}
+
+
 \end{document}
