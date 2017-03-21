@@ -38,6 +38,7 @@ Some of the other packages we will rely on during the workshop are:
 - [Python NLTK](http://www.nltk.org/)
 - [igraph](http://igraph.org/)
 - [louvain](https://pypi.python.org/pypi/louvain/)
+- [pandas](http://pandas.pydata.org/)
 
 All can be installed in Anaconda (or using `pip` if you prefer).
 
