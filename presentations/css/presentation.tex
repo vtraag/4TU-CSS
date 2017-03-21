@@ -1,0 +1,201 @@
+\documentclass[notes=hide,compress]{beamer}
+
+\usepackage{siunitx}
+
+\usepackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+
+\usepackage[
+  backend=bibtex,
+  hyperref=true,
+  url=false,
+  isbn=false,
+  doi=false,
+  eprint=false,
+  maxcitenames=3,
+  terseinits=true,
+  maxbibnames=100,
+  style=nature,
+  block=none]{biblatex}
+\bibliography{bibliography_formatted}
+% No title and no month
+\AtEveryCitekey{\clearfield{title}}
+\AtEveryCitekey{\clearfield{month}}
+\AtEveryCitekey{\clearfield{series}}
+% Only last name
+% This currently produces an error unfortunately
+% \DeclareNameFormat{}{\usebibmacro{name:first-last}{}{#5}{#1}{#7}\usebibmacro{name:andothers}}
+
+\newcommand\footnotenonum[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\newrobustcmd*{\footfullcitenomark}{%
+  \AtNextCite{%
+    \let\thefootnote\relax
+    \let\mkbibfootnote\mkbibfootnotetext}%
+  \footfullcite}
+	
+\defbeamertemplate*{footnotetext}{default}{%
+  %\parindent 1em\noindent%
+  \raggedright
+  %\hbox to 1.8em{\hfil\insertfootnotemark}%
+  \insertfootnotetext\par}
+	
+\newrobustcmd*{\footfullcitenomarkleft}{%
+  \AtNextCite{%
+    \setbeamertemplate{footnote}{\usebeamertemplate{footnotetext}}%
+    \let\mkbibfootnote\mkbibfootnotetext}%
+  \footfullcite}
+
+\usetheme{default}
+\useinnertheme{circles}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{bbm}
+\usepackage{amsmath,amssymb}
+\usepackage{datatool}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.8}
+\usepackage{eurosym}
+\usepackage[absolute,overlay]{textpos}
+\tikzstyle{every picture}+=[remember picture]
+\usepackage[normalem]{ulem}
+
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{designplots}
+\usepgfplotslibrary{dateplot}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}					% fitting shapes to coordinates
+\usetikzlibrary{backgrounds}	% drawing the background after the foreground
+\usetikzlibrary{matrix}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shapes,shapes.misc}
+\usetikzlibrary{calc,decorations.pathmorphing,patterns}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fit}					% fitting shapes to coordinates
+\usetikzlibrary{topaths}
+\usetikzlibrary{spy}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fadings}
+
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+%\everymath{\displaystyle}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\T}{{\!\top}}
+
+\pgfdeclarelayer{background} 
+\pgfsetlayers{background,main} 
+
+\setlength{\leftmargini}{1em}
+\graphicspath{{figures/}}
+% Set title and authors
+\title{Computational Social Science}
+\author{D. Nguyen \& V.A. Traag}
+\institute{
+  4TU, Twente, the Netherlands \\[5mm]
+  4TU Seminar \\}
+\titlegraphic{
+  \begin{center}
+    \begin{tabular}{rl}
+        \includegraphics[height=3cm]{logo_cwts} &
+        \includegraphics[height=2cm]{logo_LU} \\
+    \end{tabular}
+  \end{center}
+}
+\graphicspath{ {../logos/}{figures/} }
+\date{7 April, 2017}
+\tikzstyle{every picture}+=[remember picture]
+\begin{document}
+\frame[label=title]{\titlepage}
+\begin{frame}[label=overview]
+  \frametitle{Overview}
+  \begin{enumerate}
+    \item Computational social science
+    \item Formalization \& modelling
+    \item Ethics \& biases
+    \item Prediction \& interpretation
+  \end{enumerate}
+\end{frame}
+\section{Computational social science}
+\begin{frame}[c]{Common elements}
+  \centering
+  \parbox{4cm}{
+    \begin{itemize}
+      \item Digital data
+      \item Machine learning
+      \item Model
+    \end{itemize} 
+  }
+\end{frame}
+\begin{frame}[c]{Digital data}
+  \centering
+  \parbox{3cm}{
+    \begin{itemize}
+      \item Dynamical
+      \item Large-scale
+      \item Simplistic
+    \end{itemize}
+  }
+\end{frame}
+\begin{frame}[c]{Machine learning}
+  \centering
+  \parbox{6cm}{
+    \begin{itemize}
+      \item Text mining
+      \item Classification
+      \item Prediction (missing values?)
+    \end{itemize}
+  }
+\end{frame}
+\section{Formalization \& modelling}
+\begin{frame}[c]{Model}
+  \centering
+  \parbox{5cm}{
+    \begin{itemize}
+      \item Theoretical model
+      \item Conceptual model
+      \item Empirical model
+      \item Phenomenological model
+    \end{itemize}
+  }
+\end{frame}
+\begin{frame}[c]{Why model?}
+  \centering
+  \parbox{4cm}{
+    \begin{itemize}
+      \item Proper argumentation
+      \item Conceptual clarity
+      \item Compare theories 
+      \item Core dynamics
+      \item Explanation
+    \end{itemize}
+  }
+\end{frame}
+\begin{frame}[c]{Analysis}
+  \centering
+  \parbox{4cm}{
+    \begin{itemize}
+      \item Mathematical analysis
+      \item Simulation
+    \end{itemize}
+  }
+\end{frame}
+\begin{frame}[c]{Level of abstraction}
+  \centering
+  \parbox{5cm}{
+    \begin{itemize}
+      \item Macro vs micro
+      \item Individual vs aggregate
+    \end{itemize}
+  }
+\end{frame}
+\end{document}
