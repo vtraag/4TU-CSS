@@ -46,7 +46,7 @@ It is practical to use python in for example [ipython](http://ipython.org/) or [
 
 Registration
 --------
-Participation is free, but registration is required to help us plan the event accordingly: [registration form](https://goo.gl/forms/XyiyCmaZgaO01Jez2)
+Participation is free, but registration is required to help us plan the event accordingly: [registration form](https://goo.gl/forms/XyiyCmaZgaO01Jez2). Registration closes the 5th of April.
 
 Location
 --------
