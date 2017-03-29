@@ -43,7 +43,7 @@ Some of the other packages we will rely on during the workshop are:
 
 All can be installed in Anaconda (or using `pip` if you prefer).
 
-It is practical to use python in for example [ipython](http://ipython.org/) or [spyder](https://github.com/spyder-ide/spyder), both are included in the Anaconda distribution.
+It is practical to use python in for example [ipython](http://ipython.org/) or [spyder](https://github.com/spyder-ide/spyder), both are included in the Anaconda distribution. In particular, the exercises and the labs will use [jupyter notebooks](http://jupyter.org/), so please ensure that you have it installed.
 
 Registration
 --------
