@@ -34,11 +34,13 @@ We will use [python 2](https://www.python.org/) during our workshop. We will dep
 
 Some of the other packages we will rely on during the workshop are:
 
-- [gensim](https://radimrehurek.com/gensim/)
 - [empath](https://github.com/Ejhfast/empath-client)
-- [Python NLTK](http://www.nltk.org/)
+- [gensim](https://radimrehurek.com/gensim/)
 - [igraph](http://igraph.org/)
 - [louvain](https://pypi.python.org/pypi/louvain/)
+- [matplotlib](http://matplotlib.org/)
+- [NLTK](http://www.nltk.org/)
+- [seaborn](https://seaborn.pydata.org/)
 - [pandas](http://pandas.pydata.org/)
 
 All can be installed in Anaconda (or using `pip` if you prefer).
