@@ -46,7 +46,7 @@ All can be installed in Anaconda (or using `pip` if you prefer).
 
 It is practical to use python in for example [ipython](http://ipython.org/) or [spyder](https://github.com/spyder-ide/spyder), both are included in the Anaconda distribution. In particular, the exercises and the labs will use [jupyter notebooks](http://jupyter.org/), so please ensure that you have it installed.
 
-All presentations, notebooks and assignments can be downloaded from https://github.com/vtraag/4TU-CSS/releases/download/v1.0.1/4TU-CSS-v1.0.1.zip.
+All presentations, notebooks and assignments can be downloaded from <https://github.com/vtraag/4TU-CSS/releases/download/v1.0.1/4TU-CSS-v1.0.1.zip>.
 
 Registration
 --------
