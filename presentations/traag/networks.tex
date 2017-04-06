@@ -1,6 +1,8 @@
-\documentclass[notes=hide,compress]{beamer}
+\documentclass[hide notes,compress]{beamer}
 
 \usepackage{siunitx}
+
+\usepackage{datatool}
 
 \usepackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
@@ -26,6 +28,45 @@
 % This currently produces an error unfortunately
 % \DeclareNameFormat{}{\usebibmacro{name:first-last}{}{#5}{#1}{#7}\usebibmacro{name:andothers}}
 
+\usetheme{default}
+\useinnertheme{rounded}
+\useinnertheme{circles}
+\usecolortheme{orchid}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{amsmath,amssymb}
+\usepackage{datatool}
+\usepackage{eurosym}
+\usepackage[absolute,overlay]{textpos}
+\usepackage[normalem]{ulem}
+
+\usepackage{tikz}
+\usetikzlibrary{colorbrewer}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}					% fitting shapes to coordinates
+\usetikzlibrary{backgrounds}	% drawing the background after the foreground
+\usetikzlibrary{matrix}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shapes,shapes.misc}
+\usetikzlibrary{calc,decorations.pathmorphing,patterns}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fit}					% fitting shapes to coordinates
+\usetikzlibrary{topaths}
+\usetikzlibrary{spy}
+\usetikzlibrary{shadows}
+\usetikzlibrary{fadings}
+\tikzstyle{every picture}+=[remember picture]
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{designplots}
+\usepgfplotslibrary{dateplot}
+\pgfplotsset{compat=1.13}
+
 \newcommand\footnotenonum[1]{%
   \begingroup
   \renewcommand\thefootnote{}\footnote{#1}%
@@ -50,41 +91,81 @@
     \let\mkbibfootnote\mkbibfootnotetext}%
   \footfullcite}
 
-%\usetheme{Dresden}
-%\usetheme{default}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{bbm}
-\usepackage{amsmath,amssymb}
-\usepackage{datatool}
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
-\pgfplotsset{compat=1.8}
-\usepackage{eurosym}
-\usepackage[absolute,overlay]{textpos}
-\tikzstyle{every picture}+=[remember picture]
-\usepackage[normalem]{ulem}
+\newcommand{\convexpath}[2]{
+[   
+    create hullnodes/.code={
+        \global\edef\namelist{#1}
+        \foreach [count=\counter] \nodename in \namelist {
+            \global\edef\numberofnodes{\counter}
+            \node at (\nodename) [draw=none,name=hullnode\counter] {};
+        }
+        \node at (hullnode\numberofnodes) [name=hullnode0,draw=none] {};
+        \pgfmathtruncatemacro\lastnumber{\numberofnodes+1}
+        \node at (hullnode1) [name=hullnode\lastnumber,draw=none] {};
+    },
+    create hullnodes
+]
+($(hullnode1)!#2!-90:(hullnode0)$)
+\foreach [
+    evaluate=\currentnode as \previousnode using \currentnode-1,
+    evaluate=\currentnode as \nextnode using \currentnode+1
+    ] \currentnode in {1,...,\numberofnodes} {
+-- ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode)$)
+  let \p1 = ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode) - (hullnode\currentnode)$),
+    \n1 = {atan2(\y1,\x1)},
+    \p2 = ($(hullnode\currentnode)!#2!90:(hullnode\nextnode) - (hullnode\currentnode)$),
+    \n2 = {atan2(\y2,\x2)},
+    \n{delta} = {-Mod(\n1-\n2,360)}
+  in 
+    {arc [start angle=\n1, delta angle=\n{delta}, radius=#2]}
+}
+-- cycle
+}
 
-\usepgfplotslibrary{colorbrewer}
-\usepgfplotslibrary{groupplots}
-\usepgfplotslibrary{designplots}
-\usepgfplotslibrary{dateplot}
 
-\usetikzlibrary{positioning}
-\usetikzlibrary{fit}					% fitting shapes to coordinates
-\usetikzlibrary{backgrounds}	% drawing the background after the foreground
-\usetikzlibrary{matrix}
-\usetikzlibrary{patterns}
-\usetikzlibrary{shapes,shapes.misc}
-\usetikzlibrary{calc,decorations.pathmorphing,patterns}
-\usetikzlibrary{arrows}
-\usetikzlibrary{calc}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{fit}					% fitting shapes to coordinates
-\usetikzlibrary{topaths}
-\usetikzlibrary{spy}
-\usetikzlibrary{shadows}
-\usetikzlibrary{fadings}
+\tikzset{pencil/.style={
+    decorate,
+    decoration={random steps,segment length=3mm,amplitude=0.2mm}
+  }
+}
+
+\tikzset{pencil small/.style={
+    decorate,
+    decoration={random steps,segment length=2mm,amplitude=0.05mm}
+  }
+}
+
+\newcommand{\triad}[7]
+{
+  \node[p] (#1-i) at (210:5)  {#5};
+  \node[p] (#1-j) at (330:5)  {#6};
+  \node[p] (#1-k) at (90:5)   {#7};
+  \path[-, bend left=35]
+        (#1-i)	edge [#2,bend right=35] node (#1-ij) {} (#1-j) 
+            edge [#3] node (#1-ik) {} (#1-k)
+        (#1-k) edge [#4] node (#1-kj) {} (#1-j);
+}
+
+\newcommand{\clique}[6]{%
+    \foreach \i in {1,...,#2}
+    {
+      \node[n,minimum size=#6] (#1-\i) at ($(\i/#2*360 + #5:#3)+#4$) {}
+	\foreach \j in {1,...,\i} 
+	{ edge[e] (#1-\j) }
+      ;
+    }
+}
+
+\newcommand{\cliquealt}[6]{%
+    \foreach \i in {1,...,#2}
+    {
+      \node[n,minimum size=#6] (#1-\i) at ($(\i/#2*360 + #5:#3)+#4$) {}
+	\foreach \j in {1,...,\i} 
+	{ edge[e\j] (#1-\j) }
+      ;
+    }
+}
+
 
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
@@ -100,68 +181,1301 @@
 % Set title and authors
 \title{Computation Social Science - Network}
 \author{V.A. Traag}
-\institute{
-  4TU, Twente, the Netherlands \\[5mm]
-  4TU Seminar \\}
+\institute{CWTS, Leiden University}
 \titlegraphic{
-  \begin{center}
-    \begin{tabular}{rl}
-        \includegraphics[height=3cm]{logo_cwts} &
-        \includegraphics[height=2cm]{logo_LU} \\
-    \end{tabular}
-  \end{center}
+  \includegraphics[width=2cm]{logo-4tu}
 }
+
+%\includeonlyframes{title,toc,overview}
+
 \graphicspath{ {../logos/}{figures/} }
 \date{7 April, 2017}
 \tikzstyle{every picture}+=[remember picture]
 \tikzstyle{na} = [baseline=-.5ex, inner sep=0pt, outer sep=0pt]
-%\includeonlyframes{%
-  %disconnected,%
-  %disconnected2,%
-  %disconnected3%
-  %fast%
-  %fast2%
-  %louvain%
-  %WoS%
-	%upper_resolution%
-  %geomod,%
-  %geocpm%
-%}
 \begin{document}
 \frame[label=title]{\titlepage}
-\begin{frame}[label=overview]
-  \frametitle{Overview}
-  \begin{enumerate}
-    \item Network basics
-      \begin{enumerate}
-        \item Vertices \& edges
-        \item Paths \& components
-        \item Clustering \& bridges
-      \end{enumerate}
-    \item Social network tradition
-      \begin{enumerate}
-        \item Homophily
-        \item Social influence
-        \begin{enumerate}
-          \item Centrality
-        \end{enumerate}
-				\item Weak ties
-        \item Structural holes
-        \item Equivalence
-        \item Social balance
-      \end{enumerate}
-    \item Complex network tradition
-      \begin{enumerate}
-        \item Random graphs
-        \begin{enumerate}
-          \item Erdos-Renyi
-          \item Scale free
-        \end{enumerate}
-        \item Spreading \& percolation
-        \item Community detection
-      \end{enumerate}
-  \end{enumerate}
+
+\begin{frame}[label=overview,c]{Overview}
+  \begin{block}{Social network analysis}
+    \begin{itemize}
+      \item Origin in social sciences.
+      \item Starts in $\sim$ 1930s.
+      \item Homophily, social influence, weak ties, structural holes,
+            equivalence, social balance.
+      \item Traditionally observational/survey based, small-scale networks.  
+    \end{itemize}
+  \end{block}
+  \begin{block}{Complex networks}
+    \begin{itemize}
+      \item Origin in physics/applied mathematics.
+      \item Starts end of 20\textsuperscript{th} century.
+      \item Random networks, spreading, percolation, community detection.
+      \item Large-scale (digital) networks.
+    \end{itemize}
+  \end{block}
 \end{frame}
 
+\section{Network basics}
+\begin{frame}[c]
+ \begin{center}
+   \Huge
+   Network basics
+ \end{center}
+\end{frame}
+
+\tikzstyle{n}=[circle,fill=lightgray,draw=black,
+               text=white,font=\tiny,
+               minimum size=5mm,
+               inner sep=0pt, outer sep=0pt]
+\tikzstyle{e}=[gray,opacity=0.5]
+
+\DTLloaddb[noheader=false]{karate_nodes}{data/karate_nodes.csv}
+\DTLloaddb[noheader=false]{karate_links}{data/karate_links.csv}
+
+\begin{frame}[t]{Network definition}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+        { \node[n] (\n) at (\x,\y) {\n}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+
+        \only<2>{
+          \node[above left=1cm of 15] (txt_node) {Vertex};
+          \draw[->,shorten >=1mm] (txt_node) -- (15);
+        }
+        \only<3-6>{
+          \node[above left=1cm of 15] (txt_node) {Node};
+          \draw[->,shorten >=1mm] (txt_node) -- (15);
+        }
+        \only<4>{
+          \node[above right=1cm of 23-25] (txt_link) {Edge};
+          \draw[->,shorten >=1mm] (txt_link) -- (23-25);
+        }
+        \only<5-6>{
+          \node[above right=1cm of 23-25] (txt_link) {Link};
+          \draw[->,shorten >=1mm] (txt_link) -- (23-25);
+        }
+        \only<6>{
+          \node[above=1.5cm of 23-25,anchor=south,text width=2cm] 
+              (txt_weight) {Can be weighted};
+          \draw[->,shorten >=1mm] (txt_weight) -- (23-25);
+          \draw (23) edge[e,thick] (25);
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[c]{Network definition}
+
+  \begin{columns}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Nodes}
+        \begin{itemize}
+          \item People
+          \item Organisations
+          \item Blogs
+          \item Countries
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Links}
+        \begin{itemize}
+          \item Communication
+          \item Collaboration
+          \item Hyperlinks
+          \item Alliances
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  
+\end{frame}
+
+\begin{frame}[t]{Degree}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+        { \node[n] (\n) at (\x,\y) {\n}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+
+        \only<1>{
+          \node[above=1cm of 25] (txt_degree) {3 neighbors}; 
+          \draw[->,shorten >=1mm] (txt_degree) -- (25);
+          \node[n,fill=Set1-3-1] at (25) {25};
+          \foreach \v in {23, 31, 24}
+          {
+            \draw (25) edge[black,thick]
+                  (\v);
+            \node[n,fill=Set1-3-2] at (\v) {\v};
+          }
+        }
+        \only<2>{
+          \node[above=2cm of 32,xshift=-5mm] (txt_degree) {12 neighbors}; 
+          \draw[->,shorten >=1mm] (txt_degree) -- (32);
+          \node[n,fill=Set1-3-1] at (32) {32};
+          \foreach \v in {2,8,14,15,18,20,22,23,29,30,31,33}
+          {
+            \draw (32) edge[black,thick]
+                  (\v);
+            \node[n,fill=Set1-3-2] at (\v) {\v};
+          }
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[label=paths,t]{Paths}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+        { \node[n] (\n) at (\x,\y) {\n}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+
+        \only<2>{
+          %\node[above=2cm of 32] (txt_degree) {12 neighbors}; 
+          %\draw[->,shorten >=1mm] (txt_degree) -- (32);
+          %\node[n,fill=Set1-3-1] at (32) {32};
+          \foreach \v [remember=\v as \u (initially 16)] 
+                      in {16,5,0,2,32,15}
+          {
+            \draw (\u) edge[Set1-3-1,thick] 
+                  (\v);
+            \node[n,fill=Set1-3-1] at (\v) {\v};
+          }
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\DTLloaddb[noheader=false]{karate_components_nodes}{data/karate_components_nodes.csv}
+\DTLloaddb[noheader=false]{karate_components_links}{data/karate_components_links.csv}
+\begin{frame}[t]{Components}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \only<1>{
+        \node[anchor=west] at (0, 6) {Delete node 0};
+      }
+      \only<2>{
+        \node[anchor=west] at (0, 6) {Node 0 functioned as a bridge};
+      }
+      \only<3>{
+        \node[anchor=west] at (0, 6) {Usually one \emph{giant component}.};
+      }
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \only<1>{
+        \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+        { \node[n] (\n) at (\x,\y) {\n}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+        }
+        \only<2->{
+        \DTLforeach*{karate_components_nodes}{\n=node, \x=x, \y=y, \c=cluster, \l=label}
+        { \node[n,fill=Set1-3-\c] (\n) at (\x,\y) {\l}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_components_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[label=cycles,t]{Cycles}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+        { \node[n] (\n) at (\x,\y) {\n}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_links}{\u=v1,\v=v2}
+          { \draw (\u) edge[e] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+
+        \only<2>{
+          %\node[above=2cm of 32] (txt_degree) {12 neighbors}; 
+          %\draw[->,shorten >=1mm] (txt_degree) -- (32);
+          %\node[n,fill=Set1-3-1] at (32) {32};
+          \foreach \v [remember=\v as \u (initially 24)] 
+                      in {24,25,23,27,24}
+          {
+            \draw (\u) edge[Set1-3-1,thick] 
+                  (\v);
+            \node[n,fill=Set1-3-1] at (\v) {\v};
+          }
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\DTLloaddb[noheader=false]{karate_ego_nodes}{data/karate_ego_nodes.csv}
+\DTLloaddb[noheader=false]{karate_ego_links}{data/karate_ego_links.csv}
+
+\tikzstyle{e1}=[e]
+\tikzstyle{e2}=[e,black,opacity=1,thick]
+\begin{frame}[t]{Clustering}
+  \begin{overlayarea}{\textwidth}{\textheight}
+    \centering
+    \begin{tikzpicture}
+      \draw[transparent,help lines] (-1,-1) grid (10, 7);
+      \draw[transparent,thick] (-1, 0) -- (10, 0);
+      \draw[transparent,thick] (0, -1) -- (0, 7);
+      \only<1>{
+        \node[anchor=west] at (0, 6) {Zoom in on node 0};
+      }
+      \only<2>{
+        \node[anchor=west] at (0, 6) {Ego network of node 0};
+      }
+      \only<3>{
+        \node[anchor=west] at (0, 6) {Clustering $ = \frac{18}{120} = 0.15$};
+      }
+      \begin{scope}[x=8cm,y=5cm]
+        % Draw nodes
+        \only<1>{
+          \DTLforeach*{karate_nodes}{\n=node, \x=x, \y=y}
+          { \node[n] (\n) at (\x,\y) {\n}; }
+          % Draw edges 
+
+          \begin{pgfonlayer}{background}
+            \DTLforeach*{karate_links}{\u=v1,\v=v2}
+            { \draw (\u) edge[e] 
+                         node (\u-\v) {}
+                    (\v); }
+          \end{pgfonlayer}
+
+          \node[n,fill=Set1-3-1] at (0) {0};
+          \foreach \v in {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 17, 19, 21, 31}
+          {
+            \draw (0) edge[black,thick]
+                  (\v);
+            \node[n,fill=Set1-3-2] at (\v) {\v};
+          }
+        }
+        \only<2->{
+        % Draw nodes
+        \DTLforeach*{karate_ego_nodes}{\n=node, \x=x, \y=y, \l=label}
+        { \node[n] (\n) at (\x,\y) {\l}; }
+        % Draw edges 
+
+        \begin{pgfonlayer}{background}
+          \DTLforeach*{karate_ego_links}{\u=v1,\v=v2,\t=type}
+          { \draw (\u) edge[\t] 
+                       node (\u-\v) {}
+                  (\v); }
+        \end{pgfonlayer}
+        }
+      \end{scope}
+    \end{tikzpicture}  
+  \end{overlayarea}
+\end{frame}
+
+\section{Social network analysis}
+\frame[c]{\Huge \centering Social network analysis}
+
+\subsection{Homophily}
+\frame[c]{\Huge \centering Homophily}
+
+\begin{frame}[c]{Homophily}
+  \begin{itemize}
+    \item ``Birds of a feather flock together''
+    \item If people are more alike, they are more likely to be connected.
+      \begin{itemize}
+        \item Same ethnicity
+        \item Same gender
+        \item Same music preference
+        \item Same education
+      \end{itemize}
+    \item Can be measured using \emph{assortativity}.
+    \item Compares to number of expected edges (configuration model).
+    \item For nominal (i.e. categorical) variables or continuous variables.
+    \item Degree assortativity: core-periphery.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Homophily}
+  Gender assortativity $\approx 0.17$
+  \begin{center}
+    \includegraphics[width=\linewidth]{sociopatterns_gender}
+  \end{center}
+\end{frame}
+
+\begin{frame}[c]{Homophily}
+  Class assortativity $\approx 0.65$
+  \begin{center}
+    \includegraphics[width=\linewidth]{sociopatterns_class}
+  \end{center}
+\end{frame}
+
+\begin{frame}[c]{Homophily}
+  Within class gender assortativity $\approx 0.02$
+  \begin{center}
+    \includegraphics[width=\linewidth]{sociopatterns_class_0_gender}
+  \end{center}
+\end{frame}
+
+
+\subsection{Social influence}
+\frame[c]{\Huge \centering Social influence}
+
+\begin{frame}[c]{Social influence}
+
+  People that are connected influence each other.
+
+  \vskip1cm
+
+  \begin{columns}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Simple contagion}
+        \begin{itemize}
+          \item Infectious diseases
+          \item Information cascades
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Complex contagion}
+        \begin{itemize}
+          \item Opinion dynamics
+          \item Collective action
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vskip1cm
+
+  \begin{alertblock}{Confounding}
+    Problem: cannot easily distinguish from homophily!
+  \end{alertblock}
+
+\end{frame}
+
+\begin{frame}[label=opinions,t]{Opinions}
+  \only<1-6>{Example opinion dynamics, step }%
+  \only<1>{1}%
+  \only<2>{2}%
+  \only<3>{3}%
+  \only<4>{4}%
+  \only<5>{5}%
+  \only<6>{6}
+  \only<7>{Opinion assortativity $\approx 0.72$}
+  \begin{center}
+    \only<1>{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_0}}
+    \only<2>{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_1}}
+    \only<3>{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_2}}
+    \only<4>{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_3}}
+    \only<5>{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_4}}
+    \only<6->{\includegraphics[width=\linewidth]{social_influence/sociopatterns_opinion_5}}
+  \end{center}
+\end{frame}
+
+
+\subsection{Centrality}
+\frame[c]{\Huge \centering Centrality}
+\begin{frame}[c]{Centrality}
+  \begin{itemize}
+    \item Importance of a node
+      \begin{itemize}
+        \item Influence, prestige, status, centrality 
+      \end{itemize}
+    \item Many possible centralities. 
+    \item May be of use in different circumstances.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Degree centrality}
+  \begin{overlayarea}{\linewidth}{5mm}
+  A node is central if it has many links
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+    \includegraphics[width=0.9\linewidth]{centralities/karate_degree}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Betweenness centrality}
+  \begin{overlayarea}{\linewidth}{5mm}
+  A node is central if there are many paths passing through
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+    \includegraphics[width=0.9\linewidth]{centralities/karate_betweenness}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Eigenvector centrality}
+  \begin{overlayarea}{\linewidth}{5mm}
+    A node is as central as its neighbors %
+    \only<1>{(Step 1)}%
+    \only<2>{(Step 2)}%
+    \only<3>{(Step 3)}%
+    \only<4>{(Step 4)}%
+    \only<5>{(Final)}
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+    \only<1>{\includegraphics[width=0.9\linewidth]{centralities/karate_eigenvector_0}}
+    \only<2>{\includegraphics[width=0.9\linewidth]{centralities/karate_eigenvector_1}}
+    \only<3>{\includegraphics[width=0.9\linewidth]{centralities/karate_eigenvector_2}}
+    \only<4>{\includegraphics[width=0.9\linewidth]{centralities/karate_eigenvector_3}}
+    \only<5>{\includegraphics[width=0.9\linewidth]{centralities/karate_eigenvector}}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Pagerank}
+  \begin{overlayarea}{\linewidth}{5mm}
+  A node is as central as encountered in a random walk %
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+      \only<1>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_0}}
+      \only<2>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_1}}
+      \only<3>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_2}}
+      \only<4>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_3}}
+      \only<5>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_4}}
+      \only<6>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_5}}
+      \only<7>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_6}}
+      \only<8>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_7}}
+      \only<9>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_8}}
+      \only<10>{\includegraphics[width=0.9\linewidth]{centralities/karate_pagerank_9}}
+  \end{overlayarea}
+\end{frame}
+
+
+\subsection{Weak ties}
+\frame[c]{\Huge \centering Weak ties}
+
+\begin{frame}[c]{Weak ties}
+  \begin{itemize}
+    \item Weak ties are links that have a low weight.
+    \item Ties are as strong as their overlap.
+    \item Weak ties hold together the network.
+    \item Strong ties are clustered.
+    \item New information comes in via weak ties.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Weak ties}
+  Weight within classes $\approx 44$, between classes $\approx 7$.
+  \includegraphics[width=0.9\linewidth]{sociopatterns_class_weak_links}
+\end{frame}
+
+\begin{frame}[t]{Overlap}
+  Jaccard similarity: relative number of nodes in common.
+
+  \vfill
+
+  \begin{center}
+    2 out of 8 nodes in common $=\frac{2}{8} = 0.25$
+    \begin{tikzpicture}
+      \node[n] (a) at (-1, 0) {a};
+      \node[n] (b) at ( 1, 0) {b};
+      \draw[-,very thick] (a) edge node[midway] (ab) {} (b);
+
+      \node[n,above left=1cm of a] (c) {};
+      \node[n,left=1cm of a]       (d) {};
+      \node[n,below left=1cm of a] (e) {};
+      \path[-] (a) edge (c)
+                   edge (d)
+                   edge (e);
+
+      \node[n,above right=1cm of b] (f) {};
+      \node[n,right=1cm of b]       (g) {};
+      \node[n,below right=1cm of b] (h) {};
+      \path[-] (b) edge (f)
+                   edge (g)
+                   edge (h);
+
+      \node[n,fill=Set1-3-2,above=1cm of ab] (i) {};
+      \node[n,fill=Set1-3-2,below=1cm of ab] (j) {};
+      \path[-] (a) edge (i)
+                   edge (j)
+               (b) edge (i)
+                   edge (j);
+    \end{tikzpicture}  
+  \end{center}
+  
+\end{frame}
+
+\begin{frame}[t]{Weak ties}
+  Correlation between (log of) weight and overlap about 0.4
+  \begin{center}
+    \includegraphics[width=0.9\linewidth]{weight_overlap}
+  \end{center}
+\end{frame}
+
+\section{Structural holes}
+
+\begin{frame}[t]{Structural holes}
+  \begin{itemize}
+    \item Structural holes are the ``missing links''.
+
+    \begin{center}
+      \begin{tikzpicture}
+        \node[n] (0) at (0,0) {0};
+        
+        \node[n] (1) at (-30:1.2cm)   {1};
+        \node[n] (2) at ( 90:1.2cm) {2};
+        \node[n] (3) at (210:1.2cm) {3};
+
+        \path[-] (0) edge (1)
+                     edge (2)
+                     edge (3)
+                 (1) edge (2);
+
+        \draw[dashed] (150:1.1cm) circle [x radius=9mm, y radius=4mm, rotate=60];
+        \draw[dashed] (-90:1.1cm) circle [x radius=9mm, y radius=4mm];
+      \end{tikzpicture}  
+    \end{center}
+    
+    \item A node which ``fills'' a structural hole is a local bridge or \emph{broker}.
+    \item Low clustering $\Rightarrow$ high broker.
+    \item Structural holes provide strategic advantages.
+    \item Receive more and diverse information, good for creativity.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Broker}
+  \begin{overlayarea}{\linewidth}{5mm}
+    High broker has contacts across the network.
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+      \centering
+      \includegraphics[width=0.9\linewidth]{most_broker}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Broker}
+  \begin{overlayarea}{\linewidth}{5mm}
+    Low broker has contacts more concentrated in one group. 
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+    \centering
+    \includegraphics[width=0.9\linewidth]{least_broker}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Broker}
+  \begin{overlayarea}{\linewidth}{5mm}
+    Brokerage correlates with distribution across groups.
+  \end{overlayarea}
+  \begin{overlayarea}{\linewidth}{\textheight}
+    \centering
+    \includegraphics[width=0.9\linewidth]{Brokerage}
+  \end{overlayarea}
+\end{frame}
+
+\subsection{Equivalence}
+\frame[c]{\Huge \centering Equivalence}
+
+\tikzstyle{n1}=[n,fill=Set1-8-1]
+\tikzstyle{n2}=[n,fill=Set1-8-2]
+\tikzstyle{n3}=[n,fill=Set1-8-3]
+\tikzstyle{n4}=[n,fill=Set1-8-4]
+\tikzstyle{n5}=[n,fill=Set1-8-5]
+\tikzstyle{n6}=[n,fill=Set1-8-6]
+\tikzstyle{n7}=[n,fill=Set1-8-7]
+
+\begin{frame}[c]{Equivalence}
+  \begin{columns}
+    \begin{column}{0.7\textwidth}
+     \begin{itemize}
+        \item Some nodes are in some sense equal.
+        \item 
+          \only<1,3->{Structural equivalence}
+          \only<2>{\textbf{Structural equivalence}}
+          \begin{itemize}
+            \item Share the same neighbors.
+          \end{itemize}
+        \item 
+          \only<1-2,4->{Isomorphic equivalence}
+          \only<3>{\textbf{Isomorphic equivalence}}
+          \begin{itemize}
+            \item Labelling of nodes can be switched.
+          \end{itemize}
+        \item 
+          \only<1-3,5->{Regular equivalence}
+          \only<4>{\textbf{Regular equivalence}}
+          \begin{itemize}
+            \item Two nodes share same type of neighbors.
+            \item Sometimes called ``role detection''.
+          \end{itemize}
+      \end{itemize}   
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \begin{tikzpicture}
+        \only<1>{
+          \node[n] {a} 
+            child { node[n] {b} 
+                    child { node[n] {e} }
+                  } 
+            child { node[n] {c} 
+                    child { node[n] {f} } 
+                    child { node[n] {g} } 
+                  } 
+            child { node[n] {d} 
+                    child { node[n] {h} }
+                  };
+        }
+        \only<2>{
+          \node[n1] {a} 
+            child { node[n2] {b} 
+                    child { node[n3] {e} }
+                  } 
+            child { node[n4] {c} 
+                    child { node[n5] {f} } 
+                    child { node[n5] {g} } 
+                  } 
+            child { node[n6] {d} 
+                    child { node[n7] {h} }
+                  };
+        }
+        \only<3>{
+          \node[n1] {a} 
+            child { node[n2] {b} 
+                    child { node[n3] {e} }
+                  } 
+            child { node[n4] {c} 
+                    child { node[n5] {f} } 
+                    child { node[n5] {g} } 
+                  } 
+            child { node[n2] {d} 
+                    child { node[n3] {h} }
+                  };
+        }
+        \only<4>{
+          \node[n1] {a} 
+            child { node[n2] {b} 
+                    child { node[n3] {e} }
+                  } 
+            child { node[n2] {c} 
+                    child { node[n3] {f} } 
+                    child { node[n3] {g} } 
+                  } 
+            child { node[n2] {d} 
+                    child { node[n3] {h} }
+                  };
+        }
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  
+\end{frame}
+
+\subsection{Social balance}
+\frame[c]{\Huge \centering Social balance}
+
+\begin{frame}
+	\frametitle{Social balance}
+	\only<1>{Two friends are fighting. (unstable)}
+	\only<2>{All friends, everybody happy. (stable)}
+	\only<3>{Two friends are fighting. (unstable)}
+	\only<4>{My enemy's enemy is my friend. (stable)}
+	\only<5>{Mutual enemies. (unstable)}
+	\only<6>{My enemy's enemy is my friend. (stable)}
+	\begin{center}
+		\begin{tikzpicture}[x=5mm,y=5mm]
+
+			\tikzset{p/.style={n,minimum size=10mm}}
+			\tikzset{e/.style={very thick,Set1-6-2}}
+			\tikzset{e2/.style={e,Set1-6-1}}
+
+			\only<1>{\triad{triad1}{e}{e}{e2}{John}{Mike}{Pete}}
+			\only<2>{\triad{triad1}{e}{e}{e}{John}{Mike}{Pete}}
+			\only<3>{\triad{triad1}{e}{e}{e2}{John}{Mike}{Pete}}
+			\only<4>{\triad{triad1}{e}{e2}{e2}{John}{Mike}{Pete}}
+			\only<5>{\triad{triad1}{e2}{e2}{e2}{John}{Mike}{Pete}}
+			\only<6>{\triad{triad1}{e}{e2}{e2}{John}{Mike}{Pete}}
+		
+		\end{tikzpicture}	
+	\end{center}
+\end{frame}
+
+\begin{frame}[t]{Social balance} 
+
+  \includegraphics[width=\textwidth]{soc_balance}
+
+  Weak social balance: more than two factions.
+\end{frame}
+
+
+\section{Complex networks}
+\frame[c]{\Huge \centering Complex networks}
+
+\subsection{Random graphs}
+\frame[c]{\Huge \centering Random graphs}
+
+\begin{frame}[c]{Random graphs}
+
+  \begin{columns}[t]
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Why}
+        \begin{itemize}
+          \item Null-model
+          \item For testing
+          \item For analysis
+          \item Approximation, Model
+        \end{itemize}  
+      \end{block}
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{What}
+        \begin{itemize}
+          \item Erdös-Rényi graphs
+          \item Small world
+          \item Configuration model
+          \item Scale-free model
+        \end{itemize}  
+      \end{block}
+    \end{column}
+  \end{columns}
+  
+\end{frame}
+
+\begin{frame}[c]{Erdös-Rényi graphs}
+  \begin{block}{Construction}
+    \begin{itemize}
+      \item Create empy graph with $n$ nodes.
+      \item Every link has same probability $p$ of appearing.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Characteristics}
+    \begin{itemize}
+      \item Degree roughly $pn$ for most nodes.
+      \item Random links create short-distances
+      \item Low clustering
+    \end{itemize}  
+  \end{block}
+
+  Useful as null-model or first approximation.
+\end{frame}
+\begin{frame}[c]{Small world}
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{small_world}
+  \end{center}
+\end{frame}
+\begin{frame}[c]{Configuration model}
+  \begin{overlayarea}{\linewidth}{5mm}
+    \only<1>{Degree fixed}
+    \only<2>{Particular realisation}
+  \end{overlayarea}
+  \vskip5mm
+  \begin{overlayarea}{\linewidth}{0.6\textheight}
+    \begin{center}
+      \begin{tikzpicture}[x=1.8cm,y=1.6cm]
+        \tikzstyle{e}=[-, shorten <= 1pt, shorten >= 1pt,
+          bend right=10, line width=1pt]
+        \tikzstyle{h}=[-, shorten <= 4pt, shorten >= 4pt, bend right=10,
+        color=white, line width=4pt] 
+
+        \node at (0.0000325,1.9204232)  [n] (p1)   {};
+        \node at (0.4550908,0.7933351)  [n] (p2)   {};
+        \node at (1.083129,0.3480107)   [n] (p3)   {};
+        \node at (2.2209125,1.4114824)  [n] (p4)   {};
+        \node at (0.828581,1.030818)    [n] (p5)   {};
+        \node at (1.4287366,1.599514)   [n] (p6)   {};
+        \node at (1.8110229,2.6793186)  [n] (p7)   {};
+        \node at (0.6028443,2.6458648)  [n] (p8)   {};
+        \node at (-0.600547,2.9859712)  [n] (np1)  {};
+        \node at (3.4355246,1.485168)   [n] (np2)  {};
+        \node at (-1.4807484,0.4648599) [n] (np3)  {};
+        \node at (-2.1030472,1.5738374) [n] (np4)  {};
+        \node at (-0.453152,1.6447195)  [n] (np5)  {};
+        \node at (1.876317,0)           [n] (np6)  {};
+        \node at (2.7219952,0.7565929)  [n] (np7)  {};
+        \node at (-0.7388882,0.5948308) [n] (np8)  {};
+        \node at (-2.194684,0.6428498)  [n] (np9)  {};
+        \node at (-1.3501299,1.4698088) [n] (np10) {};
+        \node at (-1.103319,2.4284336)  [n] (np11) {};
+        \node at (2.8991467,2.331418)   [n] (np12) {};
+        \begin{pgfonlayer}{background}
+          \only<1-2>{
+            \draw[e]
+              (p1)   edge (p6)
+              (p1)   edge (p7)
+              (p1)   edge (p8)
+              (p2)   edge (p5)
+              (p3)   edge (p4)
+              (p4)   edge (p8)
+              (p5)   edge (p6)
+              (p5)   edge (p8)
+              (p6)   edge (p7)
+              (p6)   edge (p8)
+              (p7)   edge (p8)
+              (np4)  edge (np9)
+              (np4)  edge (np10)
+              (np5)  edge (np1)
+              (np5)  edge (np3)
+              (np5)  edge (np10)
+              (np2)  edge (np7)
+              (np2)  edge (np12)
+              (np3)  edge (np8)
+              (np3)  edge (np9)
+              (np10) edge (np11)
+              (p1)   edge (np8)
+              (p2)   edge (np8)
+              (p2)   edge (np10)
+              (p3)   edge (np7)
+              (p3)   edge (np8)
+              (p4)   edge (np7)
+              (p4)   edge (np12)
+              (p5)   edge (np10)
+              (p6)   edge (np7)
+              (p8)   edge (np11)
+              (p5)   edge (np5)
+              (p3)   edge (np6)
+              (p8)   edge (np1);
+            }
+          \only<1>{
+            \draw[h]
+              (p1)   edge (p6)
+              (p1)   edge (p7)
+              (p1)   edge (p8)
+              (p2)   edge (p5)
+              (p3)   edge (p4)
+              (p4)   edge (p8)
+              (p5)   edge (p6)
+              (p5)   edge (p8)
+              (p6)   edge (p7)
+              (p6)   edge (p8)
+              (p7)   edge (p8)
+              (np4)  edge (np9)
+              (np4)  edge (np10)
+              (np5)  edge (np1)
+              (np5)  edge (np3)
+              (np5)  edge (np10)
+              (np2)  edge (np7)
+              (np2)  edge (np12)
+              (np3)  edge (np8)
+              (np3)  edge (np9)
+              (np10) edge (np11)
+              (p1)   edge (np8)
+              (p2)   edge (np8)
+              (p2)   edge (np10)
+              (p3)   edge (np7)
+              (p3)   edge (np8)
+              (p4)   edge (np7)
+              (p4)   edge (np12)
+              (p5)   edge (np10)
+              (p6)   edge (np7)
+              (p8)   edge (np11)
+              (p5)   edge (np5)
+              (p3)   edge (np6)
+              (p8)   edge (np1);
+          }
+
+        \end{pgfonlayer}
+      \end{tikzpicture}
+    \end{center}
+  \end{overlayarea}
+\end{frame}
+\begin{frame}
+  \frametitle{Degree distribution}
+
+  \begin{tikzpicture}
+    \only<1>{
+      \begin{axis}[
+          domain=1:100,
+          no markers,
+          xlabel=Degree,
+          ylabel=Probability,
+          name=plot,
+          width=0.8\textwidth,
+          height=0.6\textheight,
+          scale only axis,
+          yticklabels={,,},
+          ymax=0.2]
+        \addplot[color=Set1-6-2,thick,samples=200,smooth]
+          {x^(-2)}
+          node[pos=0.02,pin=right:{Scale free}] {};
+        \addplot[color=Set1-6-3,thick,samples=200,smooth]
+          gnuplot[id=poisson1] {15^x*exp(-15)/gamma(x+1)}
+          node[pos=0.2,pin=above right:{Erdös-Rényi}] {};
+      \end{axis}
+    }
+    \only<2>{
+      \begin{loglogaxis}[
+          domain=1:100,
+          no markers,
+          xlabel=Degree,
+          ylabel=Probability,
+          name=plot,
+          width=0.8\textwidth,
+          height=0.6\textheight,
+          scale only axis,
+          yticklabels={,,},
+          ymin=10e-8]
+        \addplot[color=Set1-6-2,thick,samples=200,smooth]
+          {x^(-2)}
+          node[pos=1,pin=above:{Hubs}] {};
+        \addplot[color=Set1-6-3,thick,samples=200,smooth]
+          gnuplot[id=poisson2] {15^x*exp(-15)/gamma(x+1)};
+      \end{loglogaxis}
+    }
+  \end{tikzpicture}
+
+  \begin{itemize}
+    \item In many real networks, scale free degree distribution. 
+    \item In ER graphs, Poisson degree distribution. 
+  \end{itemize}
+
+\end{frame}
+\begin{frame}[c]{Scale-free}
+
+  How to get scale-free networks?
+
+  \vskip1cm
+
+  \begin{block}{Construction}
+    Start with graph with $q$ nodes
+    \begin{enumerate}
+      \item Add node
+      \item Add $q$ links with probability proportional to degree.
+      \item Repeat (1)-(2).
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}{Preferential attachment}
+    A node that already has many links has higher probability to receive yet
+    another link.
+  \end{block}
+
+  Also known as cumulative advantage, rich-get-richer, or Matthew effect.
+
+\end{frame}
+
+\subsection{Spreading}
+\frame[c]{\Huge \centering Spreading}
+
+\begin{frame}[c]{Spreading}
+
+  \begin{block}{Spreading}
+    \begin{itemize}
+      \item Already briefly encountered as social influence
+      \item Here, focus on simple contagion.
+      \item Biggest question: will it spread?
+        \begin{itemize}
+          \item Giant component
+          \item Random failure
+        \end{itemize}
+    \end{itemize}  
+  \end{block}
+
+  \vskip1cm
+
+  \begin{block}{Scale free}
+    \begin{itemize}
+      \item Scale free networks robust again random node failure.
+      \item Vulnerable for targeted attacks (take out the hubs).
+      \item No threshold for spreading.
+    \end{itemize}  
+  \end{block}
+  
+\end{frame}
+
+\begin{frame}[c]{Spreading}
+    \includegraphics[width=\linewidth]{infection}
+\end{frame}
+
+\subsection{Community detection}
+\frame[c]{\Huge \centering Community detection}
+
+\tikzstyle{p}=[line width=6mm, line cap=round, line join=round]
+\tikzstyle{e}=[color=black,bend left=15]
+\tikzstyle{es}=[opacity=0.2,bend left=15,dashed]
+\tikzstyle{n}=[font=\tiny,shape=circle,draw=Set1-8-1,fill=Set1-8-1!50, thick,
+               minimum size=4mm, outer sep=2pt, inner sep=1pt]
+\tikzstyle{n0}=[n,draw=Set1-8-1,fill=Set1-8-1!50]
+\tikzstyle{n1}=[n,draw=Set1-8-2,fill=Set1-8-2!50]
+\tikzstyle{n2}=[n,draw=Set1-8-3,fill=Set1-8-3!50]
+\tikzstyle{n3}=[n,draw=Set1-8-4,fill=Set1-8-4!50]
+\tikzstyle{n4}=[n,draw=Set1-8-5,fill=Set1-8-5!50]
+\tikzstyle{n5}=[n,draw=Set1-8-6,fill=Set1-8-6!50]
+\tikzstyle{n6}=[n,draw=Set1-8-7,fill=Set1-8-7!50]
+\tikzstyle{n7}=[n,draw=Set1-8-8,fill=Set1-8-8!50]
+\tikzstyle{n8}=[n,draw=Set2-8-1,fill=Set2-8-1!50]
+\tikzstyle{bb}=[rectangle,outer sep=0pt, inner sep=0pt]
+\tikzstyle{l}=[font=\large\sffamily\bfseries]
+\tikzstyle{img}=[inner sep=0, outer sep=0]
+\tikzstyle{s}=[pencil,draw,thick,red,rectangle]
+\tikzstyle{s2}=[pencil small,draw,thick,red,rectangle]
+
+\tikzstyle{notepaper}=[pencil,Set1-8-2!20,thin,opacity=0.5]
+\tikzstyle{noteborder}=[pencil,Set1-8-2,thick]
+
+\DTLloaddb[noheader=false]{nodes}{data/nodes.dat}
+\DTLloaddb[noheader=false]{links}{data/links.dat}
+
+\begin{frame}
+  \frametitle{What is a community?}
+
+  \begin{tikzpicture}
+    \begin{pgfonlayer}{background}
+      \path (-6,-4) rectangle  (6,4);
+    \end{pgfonlayer}
+    \begin{scope}[x=1.8cm,y=1.8cm,xshift=1.5cm, yshift=-1.5cm]
+    % Draw nodes
+      \DTLforeach*{nodes}{\n=node, \x=x, \y=y, \comm=commbad}
+      { \node[n\comm] (\n) at (\x,\y) {\n}; }
+      % Draw nodes
+      \DTLforeach*{links}{\from=from,\to=to}
+      { \draw (\from) edge[e] node[img] (\from-\to) {} (\to); }
+    \end{scope}
+    \node[bb,fit=(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11)] (G) {};
+    \begin{pgfonlayer}{background}
+      \draw[p,color=Set1-8-1!30, fill=Set1-8-1!30] 
+      plot [smooth cycle] 
+      coordinates {(1) (2) (11)};
+
+      \draw[p,color=Set1-8-2!30, fill=Set1-8-2!30] 
+      plot [smooth cycle] 
+      coordinates {(5) (9) (8) (10) (7)};
+
+      \draw[p,color=Set1-8-3!30, fill=Set1-8-3!30] 
+      plot [smooth cycle] 
+      coordinates {(3) (0) (4) (6)};
+    \end{pgfonlayer}
+
+    \only<1-8>
+    {
+      \draw[red,thick,smooth] \convexpath{3,0,4,6}{4mm};
+      \node[left=1cm of 4,yshift=3cm] (desc) {\textbf{Community}};
+      \draw[shorten <=1.5mm] (6) edge[s,bend right=15] (desc.east);
+    }
+    \only<2-8>{
+      \node[below=2mm of desc,anchor=east] (good) {But is it a \textbf{good} community?};
+    }
+    \only<3-8>{
+      \draw[pencil,Set1-8-2,thick] (-4.5,-2.3) rectangle ($(4)+(-1,1.8)$);
+      \draw[pencil,Set1-8-2!20,thin,opacity=0.5] (-4.5,-2.3)
+      grid[xstep=2mm,ystep=2mm] ($(4)+(-1,1.8)$);
+    }
+    \only<3-8>{
+      \node[anchor=west] at (-4.3, 2.1) (count) {Count links in community};
+    }
+    \only<4-8>{
+      \node[below=5mm of count.west,anchor=west] (links) {~$e_c = 4$};
+    }
+    \only<5-8>{
+      \node[below=8mm of links.west,anchor=west] (commsize) {Expected links?};
+    }
+    \only<6-8>{
+      \node[below=6mm of commsize.west,anchor=west] (posslinks) 
+      {~$\frac{1}{2}\frac{K_c^2}{2m} = \frac{1}{2}\frac{12^2}{2 \cdot 17} \approx 2.12$};
+    }
+    \only<7-8>{
+      \node[below=9mm of posslinks.west,anchor=west] (density_txt) {};
+      \node[below=6mm of density_txt.west,anchor=west, text width=4cm] (density) 
+      {$4$ links in community,\\ $2.12$ expected.};
+    }
+    \only<8-8>{
+      \node[s,fit=(density)] (dens_circle) {};
+      \node[below right=7mm of density, yshift=-1mm] (dens_desc) 
+      {Want many links, few expected};
+      \draw[s] (dens_desc) -- (dens_circle);
+    }
+  \end{tikzpicture}
+\end{frame}
+
+\newcounter{d}
+\begin{frame}
+  \frametitle{Resolution limit}
+
+  \begin{center}
+    \begin{tikzpicture}
+    %\draw[black] (-3, -4) grid[step=1] (8,4);
+    %\draw[white] (-3, -4) rectangle (8,4);
+      \tikzstyle{e}=[semitransparent, very thin]
+      \tikzstyle{cover}=[rectangle, rounded corners,fill=Set1-3-2,nearly transparent,inner sep=0.1cm, outer sep=0cm]
+      \tikzstyle{n}=[circle,draw=Set1-3-2!50,fill=Set1-3-2!50,outer sep=0mm, inner sep=0mm]
+
+    % Parameters
+      \def\rc{2cm}
+      \def\nc{12}
+      \def\n{7}
+      \def\r{0.35cm}
+    % Internal variables
+      \setcounter{d}{0}
+      \foreach \c in {1,...,\nc}
+      {
+        \clique{\c}{\n}{\r}{(\c / \nc * 360 - 45:\rc)}{130 - 360/\n - 1/\nc + \c/ \nc * 360}{1mm}
+        \ifnum\c>1
+        \draw[e,-] (\c-1) -- (\arabic{d}-1);
+        \fi
+        \begin{pgfonlayer}{background}
+          \node[circle,fill=Set1-3-2!20,minimum size=2*\r+2mm, outer sep=0mm, inner
+          sep=0mm] (\c) at (\c / \nc * 360 - 45:\rc) {};
+        \end{pgfonlayer}
+        \addtocounter{d}{1}
+      }
+
+      \only<2->{
+        \setcounter{d}{1}
+        \draw[-,e] (\nc-1) -- (\arabic{d}-1);
+        \setcounter{d}{2}
+        \begin{pgfonlayer}{background}
+
+        %\node (comm-1-2) [cover, fit=(1) (2)]  {};
+          \foreach \c in {1,3,...,\nc}
+          {
+            \draw[line width=2*\r+2mm,draw=Set1-3-2!20,line cap=rect] (\c) to (\arabic{d});
+            \addtocounter{d}{2}
+          }
+        \end{pgfonlayer}
+      }
+    \end{tikzpicture}
+  \end{center}
+
+  \only<3->{
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[white, opacity=0.85] 
+        (current page.south west) rectangle 
+        ($(current page.north east)-(0,10mm)$);
+      \node[minimum width=9cm, minimum height=7cm, 
+        inner sep=0, outer sep=0, text centered,
+        line width=7mm, black, text width=\textwidth] at (current page.center)
+        {Modularity with resolution parameter};
+    \end{tikzpicture}
+  }
+\end{frame}
+
+\begin{frame}[label=upper_resolution]
+  \frametitle{Upper resolution limit}
+  \includegraphics[width=\textwidth]{upper_limit} 
+  \vskip1cm
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[->] (-1,0) -- node[below] {Higher resolution parameter} (9,0);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Community Detection}
+
+  \begin{block}{Resolution limit free}
+    \begin{itemize}
+      \item Only few methods have no resolution limit.
+      \item Constant Potts Model (CPM) one of few such methods.
+      \item You have to choose a resolution $\gamma$.
+      \begin{itemize}
+        \item Internal density $p_c > \gamma$.
+        \item Density between $p_{cd} < \gamma$.
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{tikzpicture}[remember picture, overlay]
+    \only<2->
+    {
+      \fill[fill=white, opacity=0.9] 
+        (current page.north west) ++(0,-10mm) rectangle 
+        (current page.south east);
+      \node[font=\Huge] at (current page.center) {How to choose $\gamma$?};
+    }
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[c]{Resolution profile}
+  \includegraphics[width=0.9\linewidth]{scanres}
+\end{frame}
+
+\frame[c]{\Huge \centering Recap}
+
+\begin{frame}[c]{Recap}
+
+  \begin{columns}[t]
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Social network analysis}
+        \begin{itemize}
+          \item Homophily
+          \item Social influence
+          \item Weak ties
+          \item Structural holes
+          \item Equivalence
+          \item Social balance
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Complex networks}
+        \begin{itemize}
+          \item Random graphs 
+          \item Spreading
+          \item Community detection
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
 
 \end{document}
