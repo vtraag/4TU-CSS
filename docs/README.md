@@ -5,9 +5,8 @@
 
 With increasing amounts of data the social sciences have the opportunity to become more computationally oriented, bringing together elements of machine learning and data science with substantive social theories. We will provide a brief introduction to the core of the computational social science. The main focus in this workshop is on two key elements of this new field: natural language processing (NLP) and social networks. We will take a hands-on approach, with interactive lectures that combine theoretical explanations with actual coding. In the group assignments, we will stimulate an integrated approach to both NLP and network analysis.
 
-
-Preliminary programme
----------------------
+Programme
+---------
 
 | Time  | Topic |
 | ------------- | ------------- |
@@ -47,9 +46,11 @@ All can be installed in Anaconda (or using `pip` if you prefer).
 
 It is practical to use python in for example [ipython](http://ipython.org/) or [spyder](https://github.com/spyder-ide/spyder), both are included in the Anaconda distribution. In particular, the exercises and the labs will use [jupyter notebooks](http://jupyter.org/), so please ensure that you have it installed.
 
+All presentations, notebooks and assignments can be downloaded from https://github.com/vtraag/4TU-CSS/releases/download/v1.0.1/4TU-CSS-v1.0.1.zip.
+
 Registration
 --------
-Participation is free, but registration is required to help us plan the event accordingly: [registration form](https://goo.gl/forms/XyiyCmaZgaO01Jez2). Registration closes the 5th of April.
+Participation is free, but registration is required to help us plan the event accordingly: [registration form](https://goo.gl/forms/XyiyCmaZgaO01Jez2). Registration closed the 5th of April.
 
 Location
 --------
