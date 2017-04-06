@@ -6,6 +6,9 @@ def GraphFromURL(url, format=None, data_dir='data/'):
  
   filename = url.split('/')[-1]
 
+  if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
+
   if not os.path.exists(data_dir + filename):
     r = requests.get(url) 
     with open('data/' + filename, 'wb') as f:
